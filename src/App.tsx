@@ -7,11 +7,14 @@ import PlatformSelector from "./components/PlatformSelector";
 import type { Genre } from "./hooks/useGenre";
 import type { Platform } from "./hooks/useGames";
 
+export interface GameQuery {
+  // this is query object pattern. We are creating an object to store all the query parameters in one place. This is a common pattern in software development to manage state and pass it around components.
+  genre: Genre | null;
+  platform: Platform | null;
+}
+
 function App() {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
-    null
-  );
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   return (
     <Grid
@@ -30,9 +33,9 @@ function App() {
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <GenreList
-            selectedGenre={selectedGenre}
+            selectedGenre={gameQuery.genre}
             onSelectGenre={(genre) => {
-              setSelectedGenre(genre);
+              setGameQuery({ ...gameQuery, genre }); // destructuring the gameQuery object and updating the genre property while keeping the other properties intact. This is a common pattern in React when updating state that is an object.
               console.log(genre);
             }} // inline function as in java. This is a callback function implementation on the fly as in lamda function in java. Where is it define? It's child component 'GenreList' as props.
           />
@@ -40,17 +43,14 @@ function App() {
       </Show>
       <GridItem area="main">
         <PlatformSelector
-          selectedPlatform={selectedPlatform}
+          selectedPlatform={gameQuery.platform}
           onSelectPlatform={(platform) => {
-            setSelectedPlatform(platform);
+            setGameQuery({ ...gameQuery, platform });
             console.log(platform);
           }}
         />
 
-        <GameGrid
-          selectedPlatform={selectedPlatform}
-          selectedGenre={selectedGenre}
-        />
+        <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
   );

@@ -1,5 +1,5 @@
+import type { GameQuery } from "../App";
 import useData from "./useData";
-import type { Genre } from "./useGenre";
 
 export interface Platform {
   id: number;
@@ -22,12 +22,12 @@ export interface Game {
  genres: genre[];
 }
 
-const useGames = (selectedGenre: Genre | null, selectedPlatform: Platform | null) => 
+const useGames = (gameQuery: GameQuery) => 
   useData<Game>("/games", 
     { params: 
-      { genres: selectedGenre?.id, platforms: selectedPlatform?.id 
-        
+      { genres: gameQuery.genre?.id, platforms: gameQuery.platform?.id
+
       }}, 
-      [selectedGenre?.id, selectedPlatform?.id]);
+      [gameQuery]); // dependency array. Whenever the gameQuery object changes, the useData hook will re-run and fetch new data based on the updated query parameters. This ensures that the game list is always in sync with the selected genre and platform.
 
 export default useGames;

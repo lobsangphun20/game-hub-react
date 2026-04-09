@@ -1,27 +1,28 @@
-import { filter, SimpleGrid } from "@chakra-ui/react";
-import useGames, { type Platform } from "../hooks/useGames";
+import { SimpleGrid } from "@chakra-ui/react";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
-import type { Genre } from "../hooks/useGenre";
+import type { GameQuery } from "../App";
+import useGames from "../hooks/useGames";
 
 interface Props {
-  selectedGenre: Genre | null;
-  selectedPlatform: Platform | null;
+  gameQuery: GameQuery;
+  // selectedGenre: Genre | null;
+  // selectedPlatform: Platform | null;
 }
 
-export const GameGrid = ({ selectedGenre, selectedPlatform }: Props) => {
-  const { data, error, isLoading } = useGames(selectedGenre, selectedPlatform);
+export const GameGrid = ({ gameQuery }: Props) => {
+  const { data, error, isLoading } = useGames(gameQuery);
   const filteredGames =
-    selectedGenre != null
+    gameQuery.genre != null
       ? data.filter((game) =>
-          game.genres.some((genre) => genre.name === selectedGenre.name)
+          game.genres.some((genre) => genre.name === gameQuery.genre?.name)
         )
       : data;
-  const filteredGamesWithPlatform = selectedPlatform
+  const filteredGamesWithPlatform = gameQuery.platform
     ? filteredGames.filter((g) =>
         g.parent_platforms.some(
-          (matcher) => matcher.platform.id === selectedPlatform.id
+          (matcher) => matcher.platform.id === gameQuery.platform?.id
         )
       )
     : filteredGames;
