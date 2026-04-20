@@ -25,7 +25,7 @@ export interface Game {
 const useGames = (gameQuery: GameQuery) => 
   useData<Game>("/games", 
     { params: 
-      { genres: gameQuery.genre?.id, platforms: gameQuery.platform?.id
+      { genres: gameQuery.genre?.id, platforms: gameQuery.platform?.id, ordering: gameQuery.sortOrder
 
       }}, 
       [gameQuery]); // dependency array. Whenever the gameQuery object changes, the useData hook will re-run and fetch new data based on the updated query parameters. This ensures that the game list is always in sync with the selected genre and platform.

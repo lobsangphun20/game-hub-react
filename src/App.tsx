@@ -12,6 +12,7 @@ export interface GameQuery {
   // this is query object pattern. We are creating an object to store all the query parameters in one place. This is a common pattern in software development to manage state and pass it around components.
   genre: Genre | null;
   platform: Platform | null;
+  sortOrder: string;
 }
 
 function App() {
@@ -51,7 +52,12 @@ function App() {
               console.log(platform);
             }}
           />
-          <SortSelector />
+          <SortSelector
+            selectedSortOrder={gameQuery.sortOrder}
+            onSelectSortOrder={(sortOrder) =>
+              setGameQuery({ ...gameQuery, sortOrder })
+            }
+          />
         </HStack>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
