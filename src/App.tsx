@@ -7,12 +7,18 @@ import PlatformSelector from "./components/PlatformSelector";
 import type { Genre } from "./hooks/useGenre";
 import type { Platform } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
+import "./index.css";
 
 export interface GameQuery {
   // this is query object pattern. We are creating an object to store all the query parameters in one place. This is a common pattern in software development to manage state and pass it around components.
   genre: Genre | null;
   platform: Platform | null;
   sortOrder: string;
+  searchText: string;
+}
+
+interface Props {
+  onSearch: (searchText: string) => void;
 }
 
 function App() {
@@ -30,7 +36,9 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar
+          onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
