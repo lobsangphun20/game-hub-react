@@ -18,10 +18,6 @@ export interface GameQuery {
   searchText: string;
 }
 
-interface Props {
-  onSearch: (searchText: string) => void;
-}
-
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 

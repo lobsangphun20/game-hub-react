@@ -5,7 +5,6 @@ import {
   Image,
   List,
   ListItem,
-  Spinner,
 } from "@chakra-ui/react";
 import useGenre, { type Genre } from "../hooks/useGenre";
 import getCroppedImageUrl from "../services/image-url";
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
-  const { data, isLoading, error } = useGenre();
+  const { data } = useGenre();
 
   // if (isLoading) return <Spinner />; *****No longer needed since we are using static data, but if we were fetching from an API, we would want to show a loading spinner while the data is being fetched. This is because fetching data from an API can take some time, and we want to provide feedback to the user that something is happening. The spinner indicates that the data is being loaded and will be displayed once it is ready. In this case, since we are using static data, there is no need for a loading state, so we can remove the spinner.*****
 
